@@ -1,0 +1,91 @@
+<article class="page">
+  <header class="entry-header">
+    <h1 class="entry-title">resume</h1>
+  </header>
+  <div class="entry-content">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="event">
+          <h2>WORK HISTORY</h2>
+          <p>
+            <i class="pw-icon-briefcase"></i>
+          </p>
+        </div>
+        <div class="event">
+          <h3>Feb 2022 - Present</h3>
+          <h4>Application Development Specialist</h4>
+          <h5>Accenture India</h5>
+          <p>I am full-stack developer working with ASP.NET Web Forms, MVC, Angular, C# and SQL Server. I am currently a
+            front-end software engineer of a small but dedicated team in our Engineering Solutions Team. This team is
+            responsible for troubleshooting client issues and providing fixes in a quick turn around. We work directly
+            with our Client Support and Services department to ensure prompt delivery of fixes as well as to keep up to
+            date on client escalations.</p>
+        </div>
+        <div class="event">
+          <h3>Apr 2021 - Feb 2022</h3>
+          <h4>Technical Lead</h4>
+          <h5>L&T Technology Services</h5>
+          <p>I am full-stack developer working with ASP.NET Web Forms, MVC, Angular, C# and SQL Server. I am currently a
+            front-end software engineer of a small but dedicated team in our Engineering Solutions Team. This team is
+            responsible for troubleshooting client issues and providing fixes in a quick turn around. We work directly
+            with our Client Support and Services department to ensure prompt delivery of fixes as well as to keep up to
+            date on client escalations.</p>
+        </div>
+        <div class="event">
+          <h3>Sep 2018 - Apr 2021</h3>
+          <h4>Senior Software Engineer</h4>
+          <h5>L&T Technology Services</h5>
+          <p>We work directly with our Client Support and Services department to ensure prompt delivery of fixes as well
+            as to keep up to date on client escalations.</p>
+        </div>
+        <div class="event">
+          <h3>Oct 2017 - Sep 2018</h3>
+          <h4>Software Engineer</h4>
+          <h5>Saggezza India Pvt. Ltd.</h5>
+          <p>Made changes and fixes to an existing ecommerce application. Started on large scale web/data mining
+            project. Maintained a high level of quality. Worked on large projects while maintaining deadline and high
+            quality. Used SSIS/SSRS to create reports for the application.</p>
+        </div>
+        <div class="event">
+          <h3>Oct 2016 - Oct 2017</h3>
+          <h4>Software Engineer</h4>
+          <h5>Cogwave Software Technologies</h5>
+          <p>Created frontend web applications to reduce redundant or inefficient procedures and processes. Maintained a
+            high level of quality. Worked on large projects while maintaining deadline and high quality. Worked on
+            back-end hotel/room reservation processes for normal work day. Worked directly with clients to document and
+            program custom hotel/room policies. Traveled to client sites to train client on using solutions. Worked
+            directly with clients to analyze and trouble shoot payment issues in a client support</p>
+        </div>
+        <div class="event">
+          <h3>Nov 2014 - Oct 2016</h3>
+          <h4>Software Developer</h4>
+          <h5>Sivasakthi Software Services Pvt. Ltd.</h5>
+          <p>Maintained a high level of quality. Worked on large projects while maintaining deadline and high quality.
+          </p>
+        </div>
+        <div class="event">
+          <h2>EDUCATION</h2>
+          <p>
+            <i class="pw-icon-education"></i>
+          </p>
+        </div>
+        <app-event *ngFor="let eduEvent of eduEvents" [event]="eduEvent"></app-event>
+        <p><button type="button" class="button primary">Download Cv</button></p>
+      </div>
+      <div class="col-sm-6">
+        <div class="section-title center">
+          <h2>
+            <i>coding skills</i>
+          </h2>
+        </div>
+        <app-progress-bar *ngFor="let skill of skills" [skillset]="skill"></app-progress-bar>
+        <div class="section-title center">
+          <h2>
+            <i>TESTIMONIALS</i>
+          </h2>
+        </div>
+        <app-testimonial *ngFor="let testimonial of testimonials" [testimonial]="testimonial"></app-testimonial>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,25 @@
+.rotate-close {
+  transform: scale(1.2) rotate(540deg);
+}
+
+.close-card,
+a {
+  cursor: pointer;
+}
+
+.card-nav>ul>li {
+  cursor: pointer;
+  margin: 0 11px;
+}
+
+.cover-media {
+  background-image: url(../../../assets/images/home/portrait.JPG)
+}
+
+.card-3d-right-side {
+  background-image: url(../../../assets/images/home/portrait.JPG)
+}
+
+.card-3d-bottom-side {
+  background-image: url(../../../assets/images/home/portrait.JPG)
+}
