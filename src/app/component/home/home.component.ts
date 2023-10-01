@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -18,15 +17,17 @@ export class HomeComponent implements OnInit {
   isCardOpen = false
   isCloseFocus = false
   homeData: any
+  currentYear?: number
   @ViewChild('sectionContainer', { static: true, read: ViewContainerRef })
   sectionEntry?: ViewContainerRef
   constructor(
     private router: Router,
     private soundService: SoundService,
-    private homeService: HomeService,
-    private cdref: ChangeDetectorRef
+    private homeService: HomeService
   ) {}
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
+    
     this.homeService.isCardOpen.subscribe((data) => {
       this.isCardOpen = data
     })
