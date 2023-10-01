@@ -6,7 +6,6 @@ import { AppComponent } from './app.component'
 import { HomeComponent } from './component/home/home.component'
 import { PortfolioComponent } from './component/portfolio/portfolio.component'
 import { ContactComponent } from './component/contact/contact.component'
-import { LoaderModule } from './component/loader/loader.module'
 
 @NgModule({
   declarations: [
@@ -15,7 +14,7 @@ import { LoaderModule } from './component/loader/loader.module'
     PortfolioComponent,
     ContactComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, LoaderModule],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
