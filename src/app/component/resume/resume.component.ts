@@ -52,6 +52,24 @@ export class ResumeComponent implements OnInit {
     ]
     this.testimonials = [
       {
+        name: 'NIMEL THOMAS',
+        position: 'MANAGER / ACCENTURE',
+        image: '../../../assets/images/site/author-1.jpg',
+        comments:
+          'RV thank you for your leadership in the sprint 0 space for the frontend and also for helping out the broader team with issues. we have a' +
+          'long ways to go and your leadership will be key for successfull delivery. Thank you',
+      },
+      {
+        name: 'JOEL BRANZINE DSOUZA',
+        position: 'ASSOC MANAGER / ACCENTURE',
+        image: '../../../assets/images/site/author-1.jpg',
+        comments:
+          'Your effort for sprint 0 during release 1.2.0, 1.2.1 and 1.2.2 has been exceptional. Your guidance for developers preparing sprint 0' +
+          'document was very effective which helped us to improve quality of technical documents. Sometimes when we could not put frontend developers' +
+          'for a theme, you took up that responsibility & was performing dual roles of preparing sa well assisting in preparing documents, which added' +
+          'great value & increased flexibility of sprint 0 team. Thank you for your contributions to sprint 0 team',
+      },
+      {
         name: 'SUGUNA BHUSHAN',
         position: 'STAFF SOFTWARE ENGINEER / SYMPLR',
         image: '../../../assets/images/site/Suguna.jpg',
