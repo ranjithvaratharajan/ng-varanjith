@@ -10,10 +10,12 @@ import { TestimonialModel } from 'src/app/model/testimonial.model'
 })
 export class ResumeComponent implements OnInit {
   skills?: ProgressBarModel[]
-  testimonials?: TestimonialModel[]
+  testimonials: TestimonialModel[] = []
   eduEvents?: EventModel[]
+  currentPage = 1
+  itemsPerPage = 7
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.skills = [
@@ -53,7 +55,7 @@ export class ResumeComponent implements OnInit {
     this.testimonials = [
       {
         name: 'NIMEL THOMAS',
-        position: 'MANAGER / ACCENTURE',
+        position: 'TECHNOLOGY DELIVERY LEAD MANAGER / ACCENTURE',
         image: '../../../assets/images/site/author-1.jpg',
         comments:
           'RV thank you for your leadership in the sprint 0 space for the frontend and also for helping out the broader team with issues. we have a' +
@@ -61,7 +63,7 @@ export class ResumeComponent implements OnInit {
       },
       {
         name: 'JOEL BRANZINE DSOUZA',
-        position: 'ASSOC MANAGER / ACCENTURE',
+        position: 'PACKAGED APP DEVELOPMENT ASSOC MANAGER / ACCENTURE',
         image: '../../../assets/images/site/author-1.jpg',
         comments:
           'Your effort for sprint 0 during release 1.2.0, 1.2.1 and 1.2.2 has been exceptional. Your guidance for developers preparing sprint 0' +
@@ -177,5 +179,41 @@ export class ResumeComponent implements OnInit {
         class: 'First Class',
       },
     ]
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+    }
+  }
+
+  setPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage = page;
+    }
+  }
+
+  getPages(): number[] {
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages(); i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.testimonials?.length / this.itemsPerPage);
+  }
+
+  getCurrentPageTestimonials(): TestimonialModel[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.testimonials?.slice(startIndex, endIndex);
   }
 }

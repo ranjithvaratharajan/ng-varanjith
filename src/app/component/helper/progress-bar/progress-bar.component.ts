@@ -1,7 +1,4 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewInit,
   Component,
   Input,
   OnInit,
@@ -13,7 +10,7 @@ import { ProgressBarModel } from 'src/app/model/progress-bar.model'
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss'],
 })
-export class ProgressBarComponent implements AfterContentChecked {
+export class ProgressBarComponent implements OnInit {
   @Input() skillset: ProgressBarModel = {
     percentage: 0,
     title: '',
@@ -22,9 +19,7 @@ export class ProgressBarComponent implements AfterContentChecked {
 
   constructor() {}
 
-  ngAfterContentChecked(): void {
-    setTimeout(() => {
-      this.percentage = this.skillset.percentage
-    }, 100)
+  ngOnInit(): void {
+    this.percentage = this.skillset.percentage
   }
 }
