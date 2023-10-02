@@ -13,11 +13,13 @@ export class AppComponent implements OnInit {
 
   isCardOpen = false
   isSectionOpen = false
+  isMobile = false
   private destroy$: Subject<void> = new Subject<void>()
 
   constructor(private homeService: HomeService) {}
 
   ngOnInit(): void {
+    this.isMobile = this.homeService.isMobile()
     this.homeService.isCardOpen
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => (this.isCardOpen = data));

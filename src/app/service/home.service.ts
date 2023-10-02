@@ -16,4 +16,8 @@ export class HomeService {
   setSectionStatus(status: boolean) {
     this.isSectionOpen.next(status)
   }
+
+  isMobile(): boolean {
+    return window.innerWidth < 768;
+  }
 }

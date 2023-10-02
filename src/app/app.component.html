@@ -1,6 +1,4 @@
-<div class="no-js one-page-layout sound-effects" [ngClass]="{'is-card-loaded loaded is-card-open is-card-opened':isCardOpen,
-     'is-ajax-page-active is-ajax-page-loaded': isSectionOpen}" [class.xs]="{'is-card-loaded loaded is-card-open is-card-opened':true,
-     'is-ajax-page-active is-ajax-page-loaded': isSectionOpen}" [class.md]="{'is-card-loaded loaded is-card-open is-card-opened':true,
+<div class="no-js one-page-layout sound-effects" [ngClass]="{'is-card-loaded loaded is-card-open is-card-opened':isCardOpen||isMobile,
      'is-ajax-page-active is-ajax-page-loaded': isSectionOpen}">
   <router-outlet>
   </router-outlet>
