@@ -54,6 +54,13 @@ export class ResumeComponent implements OnInit {
     ]
     this.testimonials = [
       {
+        name: 'MEGANATHAN RAVINDRAN',
+        position: 'TECHNOLOGY DELIVERY ASSOC. LEAD MANAGER / ACCENTURE',
+        image: '../../../assets/images/site/author-1.jpg',
+        comments:
+          'Ranjith serves as a senior developer and technical lead for the WPD/CMA MUT Modernization program. His exceptional work includes rewriting the UI screens using Angular texh stack for both the WPD and CMA MUT applications. Additionally, he has mentored and supported over 4 ASEs in Angular, ensuring timely completion of tasks. Ranjith\'s dedication and quick learning abilities make him a valuable resource.',
+      },
+      {
         name: 'NIMEL THOMAS',
         position: 'TECHNOLOGY DELIVERY LEAD MANAGER / ACCENTURE',
         image: '../../../assets/images/site/author-1.jpg',
