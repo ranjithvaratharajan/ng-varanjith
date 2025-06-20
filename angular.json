@@ -32,18 +32,21 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "scripts": [
+              "node_modules/isotope-layout/dist/isotope.pkgd.min.js"
+            ],
             "styles": [
-              "src/styles.scss",
               "node_modules/normalize.css/normalize.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-lightbox/lightbox.css",
+              "src/styles.scss",
               "src/assets/css/fonts/fontello/css/fontello.css",
               "src/assets/css/align.css",
               "src/assets/css/layout.css",
               "src/assets/css/main.css",
               "src/assets/css/768.css",
               "src/assets/css/demo4.css"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {

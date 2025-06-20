@@ -32,6 +32,7 @@ export class HomeComponent {
     { path: 'about-me', label: 'About Me', icon: 'pw-icon-user' },
     { path: 'resume', label: 'Resume', icon: 'pw-icon-vcard' },
     { path: 'contact', label: 'Contact', icon: 'pw-icon-at' },
+    { path: 'portfolio', label: 'Portfolio', icon: 'pw-icon-lightbulb' },
   ];
 
   constructor() {

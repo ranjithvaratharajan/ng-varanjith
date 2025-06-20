@@ -25,9 +25,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./component/contact/contact.component').then(
             (m) => m.ContactComponent
-        ),
-      }
+          ),
+      },
+      {
+        path: 'portfolio',
+        loadComponent: () => import('./component/portfolio/portfolio').then(m => m.PortfolioComponent),
+        children: [
+          {
+            path: 'item/:id',
+            loadComponent: () => import('./component/project-details/project-details').then(m => m.ProjectDetailsComponent),
+          },
+        ],
+      },
     ],
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' }, // Catch-all for debugging
 ];

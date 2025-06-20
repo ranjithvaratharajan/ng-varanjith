@@ -1,0 +1,37 @@
+<article class="page hentry">
+  <header class="entry-header">
+    <h1 class="entry-title">Portfolio</h1>
+  </header>
+  <div class="entry-content">
+    <ul id="filters" class="filters">
+      <li [ngClass]="{'current': activeFilter() === '*'}">
+        <a href="#" data-filter="*" (click)="setFilter('*', $event)">All</a>
+      </li>
+      <li [ngClass]="{'current': activeFilter() === '.technology'}">
+        <a href="#" data-filter=".technology" (click)="setFilter('.technology', $event)">Technology</a>
+      </li>
+      <li [ngClass]="{'current': activeFilter() === '.web-development'}">
+        <a href="#" data-filter=".web-development" (click)="setFilter('.web-development', $event)">Web Development</a>
+      </li>
+      <li [ngClass]="{'current': activeFilter() === '.mobile-apps'}">
+        <a href="#" data-filter=".mobile-apps" (click)="setFilter('.mobile-apps', $event)">Mobile Apps</a>
+      </li>
+    </ul>
+
+    <div id="portfolio-grid" class="portfolio-items media-grid masonry">
+      @for (item of portfolioItems; track item.id) {
+        <div class="media-cell {{ item.filterClasses.join(' ') }} hentry">
+          <div class="media-box">
+            <img [src]="item.image" [alt]="item.title">
+            <div class="mask"></div>
+            <a [routerLink]="item.link.url" class="ajax"></a>
+          </div>
+          <div class="media-cell-desc">
+            <h3>{{ item.title }}</h3>
+            <p class="category">{{ item.category }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</article>

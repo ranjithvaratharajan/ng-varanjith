@@ -23,3 +23,7 @@ a {
 .card-3d-bottom-side {
   background-image: url(../../../assets/images/home/portrait.JPG)
 }
+
+.is-card-open .card-layout {
+  height: unset;
+}

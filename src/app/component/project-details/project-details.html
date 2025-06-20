@@ -1,0 +1,67 @@
+<article class="hentry">
+  <header class="entry-header">
+    <div class="portfolio-nav">
+      <span class="prev ajax" >
+        <a href="#" (click)="navigateToProject(prevProjectId()!); $event.preventDefault()"></a>
+      </span>
+      <span class="back">
+        <a href="#" (click)="navigateBack(); $event.preventDefault()"></a>
+      </span>
+      <span class="next ajax" *ngIf="nextProjectId()">
+        <a href="#" (click)="navigateToProject(nextProjectId()!); $event.preventDefault()"></a>
+      </span>
+    </div>
+    <h1 class="entry-title">{{ project()?.name }}</h1>
+  </header>
+  <div class="entry-content">
+    <div class="portfolio-desc">
+      <p>{{ project()?.description }}</p>
+      <div class="portfolio-meta">
+        <p><strong>Client:</strong> {{ project()?.clients?.join(', ') }}</p>
+        <p><strong>Date:</strong> {{ project()?.startDate }} - {{ project()?.endDate }}</p>
+        <p><strong>Team Members:</strong> {{ project()?.teamMembers?.join(', ') }}</p>
+        <p><strong>Roles and Responsibilities:</strong></p>
+        <ul>
+          @for (role of project()?.rolesAndResponsibilities; track role) {
+            <li>{{ role }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="screenshots">
+      <div id="screenshotCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          @for (screenshot of project()?.screenshots; track screenshot; let i = $index) {
+            <div class="carousel-item" [ngClass]="{'active': i === 0}">
+              <img [src]="screenshot" class="d-block w-100" [alt]="'Screenshot ' + (i + 1)">
+            </div>
+          }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#screenshotCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#screenshotCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="portfolio-nav">
+      <span class="prev ajax" *ngIf="prevProjectId()">
+        <a href="#" (click)="navigateToProject(prevProjectId()!); $event.preventDefault()"></a>
+      </span>
+      <span class="back">
+        <a href="#" (click)="navigateBack(); $event.preventDefault()"></a>
+      </span>
+      <span class="next ajax" *ngIf="nextProjectId()">
+        <a href="#" (click)="navigateToProject(nextProjectId()!); $event.preventDefault()"></a>
+      </span>
+    </div>
+  </div>
+</article>
+<div *ngIf="!project()" class="text-center">
+  <h2>Project Not Found</h2>
+</div>
