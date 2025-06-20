@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { TestimonialModel } from 'src/app/model/testimonial.model'
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TestimonialModel } from 'src/app/model/testimonial.model';
 
 @Component({
+  standalone: true,
   selector: 'app-testimonial',
   templateUrl: './testimonial.component.html',
-  styleUrls: ['./testimonial.component.scss'],
+  styleUrl: './testimonial.component.scss',
+  imports: [CommonModule],
 })
-export class TestimonialComponent implements OnInit {
-  @Input() testimonial?: TestimonialModel
-  constructor() {}
-
-  ngOnInit() {}
+export class TestimonialComponent {
+  @Input({ required: true }) testimonial!: TestimonialModel; // Required
 }

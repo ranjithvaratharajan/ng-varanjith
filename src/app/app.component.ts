@@ -1,36 +1,31 @@
-import { Component, OnInit } from '@angular/core'
-import { HomeService } from './service/home.service'
-import { Subject } from 'rxjs/internal/Subject'
-import { takeUntil } from 'rxjs/internal/operators/takeUntil'
+import { Component, signal, inject, afterNextRender } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HomeService } from './service/home.service';
+import { NgClass } from '@angular/common'
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss',
+  imports: [RouterOutlet, NgClass],
 })
-export class AppComponent implements OnInit {
-  title = 'VaRanjith - Design is passion | Code is poetry'
+export class AppComponent {
+  // Signals for component state
+  title = signal('VaRanjith - Design is passion | Code is poetry')
+  isMobile = signal(false)
 
-  isCardOpen = false
-  isSectionOpen = false
-  isMobile = false
-  private destroy$: Subject<void> = new Subject<void>()
+  // Inject service
+  private homeService = inject(HomeService)
 
-  constructor(private homeService: HomeService) {}
+  // Access service signals directly
+  isCardOpen = this.homeService.isCardOpen
+  isSectionOpen = this.homeService.isSectionOpen
 
-  ngOnInit(): void {
-    this.isMobile = this.homeService.isMobile()
-    this.homeService.isCardOpen
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => (this.isCardOpen = data));
-
-    this.homeService.isSectionOpen
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => (this.isSectionOpen = data));
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  constructor() {
+    afterNextRender(() => {
+      // Initialize mobile state
+      this.isMobile.set(this.homeService.isMobile())
+    })
   }
 }

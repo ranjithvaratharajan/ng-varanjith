@@ -1,87 +1,76 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core'
-import { Router } from '@angular/router'
-import { Subject } from 'rxjs/internal/Subject'
-import { takeUntil } from 'rxjs/internal/operators/takeUntil'
-import { HomeService } from 'src/app/service/home.service'
-import { SoundService } from 'src/app/service/sound.service'
+import { Component, signal, inject, ViewChild, ViewContainerRef, afterNextRender } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { HomeService } from 'src/app/service/home.service';
+import { SoundService } from 'src/app/service/sound.service';
 
 @Component({
+  standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrl: './home.component.scss',
+  imports: [CommonModule, RouterModule, RouterOutlet],
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  isCardOpen = false
-  isCloseFocus = false
-  homeData: any
-  currentYear?: number
-  private destroy$: Subject<void> = new Subject<void>();
+export class HomeComponent {
+  // Signals for component state
+  isCloseFocus = signal(false);
+  currentYear = signal(new Date().getFullYear());
 
+  // Inject dependencies
+  private router = inject(Router);
+  private homeService = inject(HomeService);
+  private soundService = inject(SoundService);
+
+  // Access service signals directly
+  isCardOpen = this.homeService.isCardOpen;
+  isSectionOpen = this.homeService.isSectionOpen;
+
+  // ViewChild for sectionContainer (if used)
   @ViewChild('sectionContainer', { static: true, read: ViewContainerRef })
-  sectionEntry?: ViewContainerRef
-  constructor(
-    private router: Router,
-    private soundService: SoundService,
-    private homeService: HomeService
-  ) {
+  sectionEntry?: ViewContainerRef;
+  navLinks = [
+    { path: 'about-me', label: 'About Me', icon: 'pw-icon-user' },
+    { path: 'resume', label: 'Resume', icon: 'pw-icon-vcard' },
+    { path: 'contact', label: 'Contact', icon: 'pw-icon-at' },
+  ];
 
-  }
-  ngOnInit(): void {
-    this.currentYear = new Date().getFullYear();
-    
-    this.homeService.isCardOpen
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.isCardOpen = data;
-      });
-    let section = this.router.url.substring(
-      this.router.url.lastIndexOf('/') + 1
-    )
-
-    setTimeout(() => {
-      if (
-        section === 'about-me' ||
-        section === 'resume' ||
-        section === 'portfolio' ||
-        section === 'contact'
-      ) {
-        this.homeService.setCardStatus(true)
-        this.homeService.setSectionStatus(true)
+  constructor() {
+    afterNextRender(() => {
+      // Initialize based on current route
+      const section = this.router.url.substring(this.router.url.lastIndexOf('/') + 1);
+      if (['about-me', 'resume', 'portfolio', 'contact'].includes(section)) {
+        this.homeService.setCardStatus(true);
+        this.homeService.setSectionStatus(true);
       }
-    }, 0)
+    });
   }
+
   openCard() {
-    this.soundService.wind.play()
-    this.homeService.setCardStatus(true)
+    this.soundService.play('wind');
+    this.homeService.setCardStatus(true);
   }
+
   closeCard() {
-    this.soundService.revWind.play()
-    this.homeService.setCardStatus(false)
-    this.homeService.setSectionStatus(false)
-    this.router.navigate(['home'])
+    this.soundService.play('revWind');
+    this.homeService.setCardStatus(false);
+    this.homeService.setSectionStatus(false);
+    this.router.navigate(['home']);
   }
+
   onCloseFocus(status: boolean) {
-    this.isCloseFocus = status
+    this.isCloseFocus.set(status);
   }
+
   openSection() {
-    this.soundService.tick.play()
-    this.homeService.isSectionOpen.next(true)
+    this.soundService.play('tick');
+    this.homeService.setSectionStatus(true);
   }
+
   goToTop() {
     window.scroll({
       top: 0,
       left: 0,
       behavior: 'smooth',
-    })
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    });
   }
 }

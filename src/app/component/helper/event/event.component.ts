@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { EventModel } from 'src/app/model/event.model'
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EventModel } from 'src/app/model/event.model';
 
 @Component({
+  standalone: true,
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.scss'],
+  styleUrl: './event.component.scss',
+  imports: [CommonModule],
 })
-export class EventComponent implements OnInit {
-  @Input() event?: EventModel
-  constructor() {}
-  ngOnInit() {}
+export class EventComponent {
+  @Input({ required: true }) Event!: EventModel; // Non-optional, camelCase
 }

@@ -1,177 +1,54 @@
 <article class="page hentry">
   <header class="entry-header">
-    <h1 class="entry-title">about me</h1>
+    <h1 class="entry-title">About Me</h1>
   </header>
   <div class="entry-content">
     <div class="about-me-desc">
-      <p>With a background in science and a passion for problem-solving, I stumbled into the world of programming and
-      discovered a whole new realm of possibilities. After years of hard work and dedication, I am proud to call myself
-      a successful engineer with experience engineering products for prestigious clients such as RRDonelly, LSC
-      Communications, and GE Healthcare.</p>
-
-      <p>Working with people from all over the world has been an incredibly rewarding experience, allowing me to expand my
-      knowledge and expertise in this ever-evolving field. I take great pride in my work, always striving to code
-      websites with the utmost respect for standards and best practices. In fact, I even used to validate my site - a
-      true testament to my attention to detail and commitment to quality.</p>
-
-      <p>Currently based in Coimbatore, I am employed by Accenture India and regularly travel to client locations to work
-      closely with teams and deliver exceptional results. Whether in my own backyard or on the other side of the globe,
-      I approach each project with the same level of enthusiasm and dedication.</p>
-
-      <p>As an engineer, I am constantly learning and growing, always seeking out new challenges and opportunities to push
-      the boundaries of what is possible. With a passion for innovation and a drive to succeed, I am excited to see
-      where this journey will take me next.</p>
+      <p>With a background in science and a passion for problem-solving, I stumbled into the world of programming and discovered a whole new realm of possibilities. After years of hard work and dedication, I am proud to call myself a successful engineer with experience engineering products for prestigious clients such as RRDonelly, LSC Communications, and GE Healthcare.</p>
+      <p>Working with people from all over the world has been an incredibly rewarding experience, allowing me to expand my knowledge and expertise in this ever-evolving field. I take great pride in my work, always striving to code websites with the utmost respect for standards and best practices. In fact, I even used to validate my site - a true testament to my attention to detail and commitment to quality.</p>
+      <p>Currently based in Coimbatore, I am employed by Accenture India and regularly travel to client locations to work closely with teams and deliver exceptional results. Whether in my own backyard or on the other side of the globe, I approach each project with the same level of enthusiasm and dedication.</p>
+      <p>As an engineer, I am constantly learning and growing, always seeking out new challenges and opportunities to push the boundaries of what is possible. With a passion for innovation and a drive to succeed, I am excited to see where this journey will take me next.</p>
     </div>
     <div class="section-title center">
-      <h2>
-        <i>services</i>
-      </h2>
+      <h2><i>Services</i></h2>
     </div>
     <div class="row pb-1">
-      <div class="col-sm-6 col-md-6 col-lg-6 col-6">
-        <div class="service">
-          <img src="../../../assets/images/site/pencil_tip.svg" alt="image" />
-          <h4>UI / UX Developer</h4>
-          <p>In the ever-evolving digital landscape, a captivating user interface (UI) and seamless user experience (UX)
-            are paramount. As a UI/UX developer, I specialize in crafting visually appealing, intuitive websites that
-            leave a lasting impression. Leveraging the latest versions of Angular and React, I ensure that your website
-            not only looks cutting-edge but also functions flawlessly.</p>
+      @for (service of services; track service.title) {
+        <div class="col-sm-6 col-md-6 col-lg-6 col-6">
+          <div class="service">
+            <img src="../../../assets/images/site/{{ service.icon }}" alt="image" />
+            <h4>{{ service.title }}</h4>
+            <p>{{ service.description }}</p>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-6 col-md-6">
-        <div class="service">
-          <img src="../../../assets/images/site/laptop.svg" alt="image" />
-          <h4>Backend Developer</h4>
-          <p>Behind every great frontend, there's a robust backend, and I've got that covered. With extensive experience
-            in backend technologies such as C#, SQL Server, SSIS, and SSRS, I build the strong foundation your
-            application needs to thrive. From data management to server-side logic, I handle it all, ensuring your
-            application runs seamlessly and securely</p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 col-md-6">
-        <div class="service">
-          <img src="../../../assets/images/site/lightbulb_idea.svg" alt="image" />
-          <h4>TTD & SOLID</h4>
-          <p>Coding isn't just about writing lines of code; it's about crafting reliable, maintainable, and scalable
-            solutions. That's why I'm committed to TTD and adhere to organizational coding standards rigorously. Every
-            line of code I write is backed by tests, guaranteeing its correctness and performance. I follow the SOLID
-            principles to create code that's not just functional but also elegant and easy to maintain.</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-6">
-        <div class="service">
-          <img src="../../../assets/images/site/camera.svg" alt="image" />
-          <h4>Problem Solver</h4>
-          <p>Challenges are opportunities in disguise, and I thrive on solving them. Whether it's a technical roadblock
-            or a complex puzzle, I'm here to find solutions that make a difference. Recently, I had the honor of winning
-            a hackathon at GE Healthcare by tackling their most dreaded iframe problems head-on. If you have a problem,
-            consider it half-solved when you reach out to me</p>
-        </div>
-      </div>
-
+      }
     </div>
     <div class="section-title center">
-      <h2>
-        <i>work process</i>
-      </h2>
+      <h2><i>Work Process</i></h2>
     </div>
     <div class="row">
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-01.svg" alt="image" />
-          <h4>DISCUSS</h4>
+      @for (process of workProcess; track process.title) {
+        <div class="col-xs-4 col-sm-2">
+          <div class="process">
+            <img src="../../../assets/images/site/{{ process.icon }}" alt="image" />
+            <h4>{{ process.title }}</h4>
+          </div>
         </div>
-      </div>
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-02.svg" alt="image" />
-          <h4>IDEA</h4>
-        </div>
-      </div>
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-03.svg" alt="image" />
-          <h4>DESIGN</h4>
-        </div>
-      </div>
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-04.svg" alt="image" />
-          <h4>DEVELOP</h4>
-        </div>
-      </div>
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-05.svg" alt="image" />
-          <h4>TEST</h4>
-        </div>
-      </div>
-      <div class="col-xs-4 col-sm-2">
-        <div class="process">
-          <img src="../../../assets/images/site/process-06.svg" alt="image" />
-          <h4>LAUNCH</h4>
-        </div>
-      </div>
+      }
     </div>
     <div class="section-title center">
-      <h2>
-        <i>Proud to work with</i>
-      </h2>
+      <h2><i>Proud to Work With</i></h2>
     </div>
     <div class="row">
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-01.png" alt="client">
-          </span>
+      @for (client of clients; track client; let i = $index) {
+        <div class="col-xs-6 col-sm-4">
+          <div class="client">
+            <span>
+              <img src="../../../assets/images/site/{{ client }}" alt="client" />
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-02.png" alt="client">
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-03.png" alt="client">
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-04.png" alt="client">
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-05.jpg" alt="client">
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-06.jpg" alt="client">
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6 col-sm-4">
-        <div class="client">
-          <span>
-            <img src="../../../assets/images/site/client-07.jpg" alt="client">
-          </span>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </article>

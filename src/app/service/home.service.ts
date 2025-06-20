@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
-  isCardOpen = new BehaviorSubject<boolean>(false)
-  isSectionOpen = new BehaviorSubject<boolean>(false)
+  // Signals for reactive state
+  isCardOpen = signal<boolean>(false);
+  isSectionOpen = signal<boolean>(false);
+
   constructor() {}
 
   setCardStatus(status: boolean) {
-    this.isCardOpen.next(status)
+    this.isCardOpen.set(status);
   }
 
   setSectionStatus(status: boolean) {
-    this.isSectionOpen.next(status)
+    this.isSectionOpen.set(status);
   }
 
   isMobile(): boolean {

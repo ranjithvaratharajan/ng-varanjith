@@ -1,39 +1,36 @@
 <section class="card-layout">
   <div class="card-intro">
     <h1>Va Ranjith</h1>
-    <p>Hello there, I am an Application Development Specialist, working for Accenture India and lives in Coimbatore.
-    </p>
+    <p>Hello there, I am an Application Development Specialist, working for Accenture India and lives in Coimbatore.</p>
     <div class="card-triggers">
       <button type="button" class="button primary">Download Cv</button>
       <button (click)="openCard()" class="button secondary">Discover</button>
     </div>
   </div>
   <div id="card" class="card">
-    <div class="cover" (click)="!isCardOpen && openCard()">
+    <div class="cover" (click)="!isCardOpen() && openCard()">
       <img class="cover-img" src="../../../assets/images/home/portrait.JPG" alt="vcard">
       <div class="cover-media"></div>
       <div class="card-info">
         <h2>Va Ranjith</h2>
-        <h3>Design is passion | Code is poetry </h3>
+        <h3>Design is passion | Code is poetry</h3>
         <div class="card-desc">
-          <p>Hello there, I am an Application Development Specialist, working for Accenture India and lives in Coimbatore.
-          </p>
+          <p>Hello there, I am an Application Development Specialist, working for Accenture India and lives in Coimbatore.</p>
         </div>
       </div>
       <nav class="card-nav">
         <ul>
+        @for (link of navLinks; track link.path) {
           <li>
-            <a routerLink='about-me' routerLinkActive='current_page_item' (click)="openSection()"><i
-                class="pw-icon-user"></i>About Me</a>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="current_page_item"
+              (click)="openSection()"
+            >
+              <i [class]="link.icon"></i>{{ link.label }}
+            </a>
           </li>
-          <li>
-            <a routerLink='resume' routerLinkActive='current_page_item' (click)="openSection()"><i
-                class="pw-icon-vcard"></i>Resume</a>
-          </li>
-          <li>
-            <a routerLink='contact' routerLinkActive='current_page_item' (click)="openSection()"><i
-                class="pw-icon-at"></i>Contact</a>
-          </li>
+        }
         </ul>
       </nav>
       <div class="cover-link"></div>
@@ -45,18 +42,25 @@
       <ng-container #sectionContainer></ng-container>
     </div>
   </div>
-  <a class="close-card" (mouseenter)="onCloseFocus(true)" (mouseleave)="onCloseFocus(false)" (click)="closeCard()"
-    [ngClass]="{'is-visible':isCardOpen,'rotate-close':isCloseFocus}"></a>
+  <a
+    class="close-card"
+    (mouseenter)="onCloseFocus(true)"
+    (mouseleave)="onCloseFocus(false)"
+    (click)="closeCard()"
+    [ngClass]="{
+      'is-visible': isCardOpen(),
+      'rotate-close': isCloseFocus()
+    }"
+  ></a>
 </section>
 <div class="card-footer">
   <h1><a (click)="goToTop()">go to top</a></h1>
 </div>
 
-
 <footer id="colophon" class="site-footer" role="contentinfo">
   <div class="site-info">
     <div class="textwidgept">
-      <p><a>© Copyright {{currentYear}} | VaRanjith R&amp;D | Made with ❤ in Angular 18.2.0</a></p>
+      <p><a>© Copyright {{ currentYear() }} | VaRanjith R&D | Made with ❤ in Angular 20</a></p>
     </div>
   </div>
 </footer>

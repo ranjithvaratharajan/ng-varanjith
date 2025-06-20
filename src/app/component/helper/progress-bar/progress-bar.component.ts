@@ -1,25 +1,14 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core'
-import { ProgressBarModel } from 'src/app/model/progress-bar.model'
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProgressBarModel } from 'src/app/model/progress-bar.model';
 
 @Component({
+  standalone: true,
   selector: 'app-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss'],
+  styleUrl: './progress-bar.component.scss',
+  imports: [CommonModule],
 })
-export class ProgressBarComponent implements OnInit {
-  @Input() skillset: ProgressBarModel = {
-    percentage: 0,
-    title: '',
-  }
-  percentage: number = 0
-
-  constructor() {}
-
-  ngOnInit(): void {
-    this.percentage = this.skillset.percentage
-  }
+export class ProgressBarComponent {
+  @Input({ required: true }) Skillset!: ProgressBarModel; // Renamed, required
 }
