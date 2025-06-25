@@ -36,7 +36,7 @@ export class PortfolioComponent implements AfterViewInit {
       category: 'Web Development',
       filterClasses: ['web-development'],
       image: 'assets/images/portfolio/01.jpg',
-      link: { type: 'ajax', url: 'item/1' },
+      link: { type: 'ajax', url: '1' },
     },
     {
       id: '2',
@@ -44,7 +44,7 @@ export class PortfolioComponent implements AfterViewInit {
       category: 'Web Development',
       filterClasses: ['web-development'],
       image: 'assets/images/portfolio/02.jpg',
-      link: { type: 'ajax', url: 'item/2' },
+      link: { type: 'ajax', url: '2' },
     },
     {
       id: '3',
@@ -52,7 +52,7 @@ export class PortfolioComponent implements AfterViewInit {
       category: 'Mobile Apps',
       filterClasses: ['mobile-apps'],
       image: 'assets/images/portfolio/03.jpg',
-      link: { type: 'ajax', url: 'item/3' },
+      link: { type: 'ajax', url: '3' },
     },
     {
       id: '4',
@@ -60,7 +60,7 @@ export class PortfolioComponent implements AfterViewInit {
       category: 'Technology',
       filterClasses: ['technology'],
       image: 'assets/images/portfolio/04.jpg',
-      link: { type: 'ajax', url: 'item/4' },
+      link: { type: 'ajax', url: '4' },
     },
     {
       id: '5',
@@ -68,7 +68,7 @@ export class PortfolioComponent implements AfterViewInit {
       category: 'Technology',
       filterClasses: ['technology'],
       image: 'assets/images/portfolio/05.jpg',
-      link: { type: 'ajax', url: 'item/5' },
+      link: { type: 'ajax', url: '5' },
     },
   ];
 

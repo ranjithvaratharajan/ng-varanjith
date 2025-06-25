@@ -1,54 +1,55 @@
-<article class="page hentry">
-  <header class="entry-header">
-    <h1 class="entry-title">About Me</h1>
-  </header>
-  <div class="entry-content">
-    <div class="about-me-desc">
-      <p>With a background in science and a passion for problem-solving, I stumbled into the world of programming and discovered a whole new realm of possibilities. After years of hard work and dedication, I am proud to call myself a successful engineer with experience engineering products for prestigious clients such as RRDonelly, LSC Communications, and GE Healthcare.</p>
-      <p>Working with people from all over the world has been an incredibly rewarding experience, allowing me to expand my knowledge and expertise in this ever-evolving field. I take great pride in my work, always striving to code websites with the utmost respect for standards and best practices. In fact, I even used to validate my site - a true testament to my attention to detail and commitment to quality.</p>
-      <p>Currently based in Coimbatore, I am employed by Accenture India and regularly travel to client locations to work closely with teams and deliver exceptional results. Whether in my own backyard or on the other side of the globe, I approach each project with the same level of enthusiasm and dedication.</p>
-      <p>As an engineer, I am constantly learning and growing, always seeking out new challenges and opportunities to push the boundaries of what is possible. With a passion for innovation and a drive to succeed, I am excited to see where this journey will take me next.</p>
-    </div>
-    <div class="section-title center">
-      <h2><i>Services</i></h2>
-    </div>
-    <div class="row pb-1">
-      @for (service of services; track service.title) {
-        <div class="col-sm-6 col-md-6 col-lg-6 col-6">
-          <div class="service">
-            <img src="../../../assets/images/site/{{ service.icon }}" alt="image" />
-            <h4>{{ service.title }}</h4>
-            <p>{{ service.description }}</p>
-          </div>
+  @defer (when !loading.isLoading()) {
+    <article class="page hentry">
+      <header class="entry-header">
+        <h1 class="entry-title">About Me</h1>
+      </header>
+      <div class="entry-content">
+        <div class="about-me-desc">
+          @for (paragraph of JSON.parse(description().content); track $index) {
+            <p>{{ paragraph }}</p>
+          }
         </div>
-      }
-    </div>
-    <div class="section-title center">
-      <h2><i>Work Process</i></h2>
-    </div>
-    <div class="row">
-      @for (process of workProcess; track process.title) {
-        <div class="col-xs-4 col-sm-2">
-          <div class="process">
-            <img src="../../../assets/images/site/{{ process.icon }}" alt="image" />
-            <h4>{{ process.title }}</h4>
-          </div>
+        <div class="section-title center">
+          <h2><i>Services</i></h2>
         </div>
-      }
-    </div>
-    <div class="section-title center">
-      <h2><i>Proud to Work With</i></h2>
-    </div>
-    <div class="row">
-      @for (client of clients; track client; let i = $index) {
-        <div class="col-xs-6 col-sm-4">
-          <div class="client">
-            <span>
-              <img src="../../../assets/images/site/{{ client }}" alt="client" />
-            </span>
-          </div>
+        <div class="row pb-1">
+          @for (service of services(); track service.id) {
+            <div class="col-sm-12 col-md-6 col-lg-6">
+              <div class="service">
+                <img src="https://varanjith.com/api/uploads/{{ service.icon }}" alt="image" />
+                <h4>{{ service.title }}</h4>
+                <p class="service-desc">{{ service.description }}</p>
+              </div>
+            </div>
+          }
         </div>
-      }
-    </div>
-  </div>
-</article>
+        <div class="section-title center">
+          <h2><i>Work Process</i></h2>
+        </div>
+        <div class="row">
+          @for (process of workProcess(); track process.id) {
+            <div class="col-xs-4 col-sm-2">
+              <div class="process">
+                <img src="https://varanjith.com/api/uploads/{{ process.icon }}" alt="image" />
+                <h4>{{ process.title }}</h4>
+              </div>
+            </div>
+          }
+        </div>
+        <div class="section-title center">
+          <h2><i>Proud to Work With</i></h2>
+        </div>
+        <div class="row">
+          @for (client of clients(); track client.id; let i = $index) {
+            <div class="col-xs-6 col-sm-4">
+              <div class="client">
+                <span>
+                  <img src="https://varanjith.com/api/uploads/{{ client.image }}" alt="client" />
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </article>
+  }

@@ -24,7 +24,7 @@
           <div class="media-box">
             <img [src]="item.image" [alt]="item.title">
             <div class="mask"></div>
-            <a [routerLink]="item.link.url" class="ajax"></a>
+            <a [routerLink]="[{ outlets: { primary: [item.link.url] } }]" class="ajax"></a>
           </div>
           <div class="media-cell-desc">
             <h3>{{ item.title }}</h3>

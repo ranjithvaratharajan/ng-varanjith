@@ -1,8 +1,9 @@
 export interface EventModel {
-  class: string
-  percentage: string
-  Name: string
-  Title: string
-  endYear: string
-  startYear: string
+  id?: number;
+  startYear: string;
+  endYear: string;
+  title: string;
+  name: string;
+  percentage: string;
+  class: string;
 }

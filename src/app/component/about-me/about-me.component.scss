@@ -1,7 +1,14 @@
 .hentry{
     padding: 0 10%;
   }
-  
+
   .pb-1{
     padding-bottom: 10px;
   }
+
+  .row{
+    row-gap: 1rem;
+  }
+.service-desc, .about-me-desc {
+  text-align: justify;
+}

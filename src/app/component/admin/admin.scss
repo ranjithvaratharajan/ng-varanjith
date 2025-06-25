@@ -1,0 +1,33 @@
+.login-box {
+  width: 280px;
+  position: relative;
+  color: #191970;
+  h1 {
+    font-size: 40px;
+    border-bottom: 4px solid #191970;
+    margin-bottom: 50px;
+    padding: 13px;
+  }
+}
+.form-group {
+  margin: 10px 0;
+}
+.form-control {
+  width: 100%;
+  padding: 8px;
+  font-size: 18px;
+  border-bottom: 1px solid #191970;
+}
+.btn-success {
+  width: 100%;
+  padding: 8px;
+  background: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+.error {
+  color: red;
+  margin-top: 10px;
+}

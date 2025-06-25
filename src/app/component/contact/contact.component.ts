@@ -1,5 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+
+interface SocialLink {
+  id: number;
+  platform: string;
+  url: string;
+  class: string;
+}
+
+interface ContactInfo {
+  id: number;
+  icon: string;
+  text: string;
+}
 
 @Component({
   standalone: true,
@@ -9,40 +23,36 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
 })
 export class ContactComponent {
-  socialLinks = [
-    {
-      platform: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/ranjithvaratharajan',
-      class: 'linkedin',
-    },
-    {
-      platform: 'GitHub',
-      url: 'https://github.com/ranjithvaratharajan',
-      class: 'github',
-    },
-    {
-      platform: 'Stack Overflow',
-      url: 'https://stackoverflow.com/users/4365228/ranjith-varadan',
-      class: 'stack-overflow',
-    },
-  ];
+  private http = inject(HttpClient);
+  private baseUrl = 'https://varanjith.com/api';
 
-  contactInfo = [
-    {
-      icon: 'icon-location.svg',
-      text: 'BASED IN COIMBATORE, IN',
-    },
-    {
-      icon: 'icon-phone.svg',
-      text: 'TEL : +91 9514771988',
-    },
-    {
-      icon: 'icon-mail.svg',
-      text: 'HELLO@RANJITHVARATHARAJAN.COM',
-    },
-    {
-      icon: 'icon-check.svg',
-      text: 'FREELANCE AVAILABLE',
-    },
-  ];
+  // Signals for data
+  socialLinks = signal<SocialLink[]>([]);
+  contactInfo = signal<ContactInfo[]>([]);
+  loading = signal<boolean>(true);
+  error = signal<string | null>(null);
+
+  constructor() {
+    this.loadData();
+  }
+
+  private loadData(): void {
+    this.http.get<SocialLink[]>(`${this.baseUrl}/contact.php?resource=social_links`).subscribe({
+      next: (data) => this.socialLinks.set(data),
+      error: (err) => {
+        this.error.set('Failed to load social links');
+        console.error(err);
+      },
+      complete: () => {
+        this.http.get<ContactInfo[]>(`${this.baseUrl}/contact.php?resource=contact_info`).subscribe({
+          next: (data) => this.contactInfo.set(data),
+          error: (err) => {
+            this.error.set('Failed to load contact info');
+            console.error(err);
+          },
+          complete: () => this.loading.set(false),
+        });
+      },
+    });
+  }
 }

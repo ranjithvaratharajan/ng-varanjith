@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
+import { authGuard, redirectIfAuthenticatedGuard } from './guard/auth-guard'
 
 export const routes: Routes = [
   {
@@ -30,15 +31,22 @@ export const routes: Routes = [
       {
         path: 'portfolio',
         loadComponent: () => import('./component/portfolio/portfolio').then(m => m.PortfolioComponent),
-        children: [
-          {
-            path: 'item/:id',
-            loadComponent: () => import('./component/project-details/project-details').then(m => m.ProjectDetailsComponent),
-          },
-        ],
       },
+      { path: 'admin',
+        loadComponent: () => import('./component/admin/admin').then(m => m.AdminComponent),
+        canActivate: [redirectIfAuthenticatedGuard]
+      },
+      {
+        path: 'admin/dashboard',
+        loadComponent: () => import('./component/admin/dashboard/dashboard').then(m => m.AdminDashboardComponent),
+        canActivate: [authGuard],
+      }
     ],
+
+  },
+  {
+    path: 'home/portfolio/:id',
+    loadComponent: () => import('./component/project-details/project-details').then(m => m.ProjectDetailsComponent),
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' }, // Catch-all for debugging
 ];

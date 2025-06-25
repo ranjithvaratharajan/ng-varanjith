@@ -1,0 +1,759 @@
+@if (!loading.isLoading()){
+<div class="container">
+  <h2>Admin Dashboard</h2>
+  <button class="btn btn-danger mb-3" (click)="logout()">Logout</button>
+
+  <!-- Tab Navigation -->
+  <ul class="nav nav-tabs" role="tablist">
+    @for (tab of tabs; track tab.id) {
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [class.active]="activeTab() === tab.id"
+          (click)="setActiveTab(tab.id)"
+          role="tab"
+        >{{ tab.label }}</a>
+      </li>
+    }
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content mt-3">
+    @if (activeTab() === 'home') {
+      <div class="tab-pane active">
+        <h3>Home Content Management</h3>
+
+        <!-- Profile Form -->
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="profile-name"
+              class="form-control"
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            @if (profileForm.get('name')?.hasError('required') && profileForm.get('name')?.touched) {
+              <small class="form-text text-danger">Name is required</small>
+            }
+          </div>
+          <div class="form-group">
+            <label for="tagline">Tagline</label>
+            <input
+              type="text"
+              id="tagline"
+              class="form-control"
+              formControlName="tagline"
+              placeholder="Enter your tagline"
+            />
+            @if (profileForm.get('tagline')?.hasError('required') && profileForm.get('tagline')?.touched) {
+              <small class="form-text text-danger">Tagline is required</small>
+            }
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="profile-description"
+              class="form-control"
+              formControlName="description"
+              placeholder="Enter your description"
+            ></textarea>
+            @if (profileForm.get('description')?.hasError('required') && profileForm.get('description')?.touched) {
+              <small class="form-text text-danger">Description is required</small>
+            }
+          </div>
+          <div class="form-group">
+            <label for="profileImage">Profile Image</label>
+            <input
+              type="file"
+              id="profileImage"
+              class="form-control"
+              (change)="onProfileImageSelected($event)"
+              accept="image/jpeg,image/png"
+            />
+            <small class="form-text text-muted">Accepted formats: JPG, PNG (max 5MB)</small>
+            @if (profile().profile_image_url) {
+              <p class="mt-2">
+                Current: <a [href]="profile().profile_image_url" target="_blank">View Image</a>
+              </p>
+            }
+          </div>
+          <div class="form-group">
+            <label for="cvFile">CV File</label>
+            <input
+              type="file"
+              id="cvFile"
+              class="form-control"
+              (change)="onCvFileSelected($event)"
+              accept="application/pdf"
+            />
+            <small class="form-text text-muted">Accepted format: PDF (max 5MB)</small>
+            @if (profile().cv_file_url) {
+              <p class="mt-2">
+                Current: <a [href]="profile().cv_file_url" target="_blank">View CV</a>
+              </p>
+            }
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
+              {{ hasProfile() ? 'Update Profile' : 'Create Profile' }}
+            </button>
+            @if (hasProfile()) {
+              <button
+                type="button"
+                class="btn btn-danger ml-2"
+                (click)="deleteProfile()"
+              >
+                Delete Profile
+              </button>
+            }
+          </div>
+        </form>
+
+        <!-- Preview Profile -->
+        @defer (when hasProfile()) {
+          <div class="profile-preview mt-4">
+            <h4>Profile Preview</h4>
+            <p><strong>Name:</strong> {{ profile().name }}</p>
+            <p><strong>Tagline:</strong> {{ profile().tagline }}</p>
+            <p><strong>Description:</strong> {{ profile().description }}</p>
+            @if (profile().profile_image_url) {
+              <p>
+                <strong>Profile Image:</strong>
+                <img [src]="profile().profile_image_url" alt="Profile Image" class="preview-img" />
+              </p>
+            }
+            @if (profile().cv_file_url) {
+              <p>
+                <strong>CV File:</strong>
+                <a [href]="profile().cv_file_url" target="_blank">Download CV</a>
+              </p>
+            }
+          </div>
+        }
+      </div>
+    }
+    @else if (activeTab() === 'about-me') {
+      <div class="tab-pane active">
+        <h3>About Me Content Management</h3>
+
+        <!-- Description Form -->
+        <form [formGroup]="descriptionForm" (ngSubmit)="saveDescription()">
+          <div class="form-group">
+            <label>Description Paragraphs (one per line)</label>
+            <textarea
+              class="form-control"
+              formControlName="content"
+              placeholder="Enter paragraphs, one per line"
+              rows="6"
+            ></textarea>
+            @if (descriptionForm.get('content')?.hasError('required') && descriptionForm.get('content')?.touched) {
+              <small class="form-text text-danger">Description is required</small>
+            }
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="descriptionForm.invalid">
+              {{ hasDescription() ? 'Update Description' : 'Save Description' }}
+            </button>
+            @if (hasDescription()) {
+              <button
+                type="button"
+                class="btn btn-danger ml-2"
+                (click)="deleteDescription()"
+              >
+                Delete Description
+              </button>
+            }
+          </div>
+        </form>
+
+        <!-- Services Management -->
+        <div class="mt-4">
+          <h4>Services</h4>
+          <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
+            <div class="form-group">
+              <label for="serviceTitle">Title</label>
+              <input
+                type="text"
+                id="serviceTitle"
+                class="form-control"
+                formControlName="title"
+                placeholder="Enter service title"
+              />
+              @if (serviceForm.get('title')?.hasError('required') && serviceForm.get('title')?.touched) {
+                <small class="form-text text-danger">Title is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="serviceDescription">Description</label>
+              <textarea
+                id="serviceDescription"
+                class="form-control"
+                formControlName="description"
+                placeholder="Enter service description"
+              ></textarea>
+              @if (serviceForm.get('description')?.hasError('required') && serviceForm.get('description')?.touched) {
+                <small class="form-text text-danger">Description is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="serviceIcon">Icon</label>
+              <input
+                type="file"
+                id="serviceIcon"
+                class="form-control"
+                (change)="onServiceIconSelected($event)"
+                accept="image/*"
+              />
+              <small class="form-text text-muted">Accepted formats: JPG, PNG, SVG (max 5MB)</small>
+              @if (editingService()?.icon) {
+                <p class="mt-2">
+                  Current: <a [href]="'https://varanjith.com/api/uploads/' + editingService()?.icon" target="_blank">View Icon</a>
+                </p>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="serviceForm.invalid">
+                {{ editingService()?.id ? 'Update Service' : 'Add Service' }}
+              </button>
+              @if (editingService()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditService()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Services</h5>
+            @if (services().length > 0) {
+              <ul>
+                @for (service of services(); track service.id) {
+                  <li>
+                    {{ service.title }}
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editService(service)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteService(service.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No services added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Work Process Management -->
+        <div class="mt-4">
+          <h4>Work Process</h4>
+          <form [formGroup]="workProcessForm" (ngSubmit)="saveWorkProcess()">
+            <div class="form-group">
+              <label for="processTitle">Title</label>
+              <input
+                type="text"
+                id="processTitle"
+                class="form-control"
+                formControlName="title"
+                placeholder="Enter process title"
+              />
+              @if (workProcessForm.get('title')?.hasError('required') && workProcessForm.get('title')?.touched) {
+                <small class="form-text text-danger">Title is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="processIcon">Icon</label>
+              <input
+                type="file"
+                id="processIcon"
+                class="form-control"
+                (change)="onWorkProcessIconSelected($event)"
+                accept="image/*"
+              />
+              <small class="form-text text-muted">Accepted formats: JPG, PNG, SVG (max 5MB)</small>
+              @if (editingWorkProcess()?.icon) {
+                <p class="mt-2">
+                  Current: <a [href]="'https://varanjith.com/api/uploads/' + editingWorkProcess()?.icon" target="_blank">View Icon</a>
+                </p>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="workProcessForm.invalid">
+                {{ editingWorkProcess()?.id ? 'Update Process' : 'Add Process' }}
+              </button>
+              @if (editingWorkProcess()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditWorkProcess()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Work Processes</h5>
+            @if (workProcess().length > 0) {
+              <ul>
+                @for (process of workProcess(); track process.id) {
+                  <li>
+                    {{ process.title }}
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editWorkProcess(process)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteWorkProcess(process.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No work processes added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Clients Management -->
+        <div class="mt-4">
+          <h4>Clients</h4>
+          <form [formGroup]="clientForm" (ngSubmit)="saveClient()">
+            <div class="form-group">
+              <label for="clientImage">Client Logo</label>
+              <input
+                type="file"
+                id="clientImage"
+                class="form-control"
+                (change)="onClientImageSelected($event)"
+                accept="image/*"
+              />
+              <small class="form-text text-muted">Accepted formats: JPG, PNG (max 5MB)</small>
+              @if (editingClient()?.image) {
+                <p class="mt-2">
+                  Current: <a [href]="'https://varanjith.com/api/uploads/' + editingClient()?.image" target="_blank">View Logo</a>
+                </p>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">
+                {{ editingClient()?.id ? 'Update Client' : 'Add Client' }}
+              </button>
+              @if (editingClient()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditClient()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Clients</h5>
+            @if (clients().length > 0) {
+              <ul>
+                @for (client of clients(); track client.id) {
+                  <li>
+                    <img src="https://varanjith.com/api/uploads/{{ client.image }}" alt="Client" class="preview-img" />
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editClient(client)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteClient(client.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No clients added yet.</p>
+            }
+          </div>
+        </div>
+      </div>
+    }
+    @else if (activeTab() === 'resume') {
+      <div class="tab-pane active">
+        <h3>Resume Content Management</h3>
+
+        <!-- Work History Management -->
+        <div class="mt-4">
+          <h4>Work History</h4>
+          <form [formGroup]="workHistoryForm" (ngSubmit)="saveWorkHistory()">
+            <div class="form-group">
+              <label for="startDate">Start Date</label>
+              <input type="text" id="startDate" class="form-control" formControlName="startDate" placeholder="e.g., Feb 2022" />
+              @if (workHistoryForm.get('startDate')?.hasError('required') && workHistoryForm.get('startDate')?.touched) {
+                <small class="form-text text-danger">Start Date is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="endDate">End Date</label>
+              <input type="text" id="endDate" class="form-control" formControlName="endDate" placeholder="e.g., Present" />
+              @if (workHistoryForm.get('endDate')?.hasError('required') && workHistoryForm.get('endDate')?.touched) {
+                <small class="form-text text-danger">End Date is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" id="title" class="form-control" formControlName="title" placeholder="Enter job title" />
+              @if (workHistoryForm.get('title')?.hasError('required') && workHistoryForm.get('title')?.touched) {
+                <small class="form-text text-danger">Title is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" class="form-control" formControlName="company" placeholder="Enter company name" />
+              @if (workHistoryForm.get('company')?.hasError('required') && workHistoryForm.get('company')?.touched) {
+                <small class="form-text text-danger">Company is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" class="form-control" formControlName="description" placeholder="Enter job description"></textarea>
+              @if (workHistoryForm.get('description')?.hasError('required') && workHistoryForm.get('description')?.touched) {
+                <small class="form-text text-danger">Description is required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="workHistoryForm.invalid">
+                {{ editingWorkHistory()?.id ? 'Update Work History' : 'Add Work History' }}
+              </button>
+              @if (editingWorkHistory()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditWorkHistory()">Cancel</button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Work History</h5>
+            @if (workHistory().length > 0) {
+              <ul>
+                @for (job of workHistory(); track job.id) {
+                  <li>
+                    {{ job.title }} at {{ job.company }} ({{ job.startDate }} - {{ job.endDate }})
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editWorkHistory(job)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteWorkHistory(job.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No work history added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Education Management -->
+        <div class="mt-4">
+          <h4>Education</h4>
+          <form [formGroup]="educationForm" (ngSubmit)="saveEducation()">
+            <div class="form-group">
+              <label for="eduStartYear">Start Year</label>
+              <input type="text" id="eduStartYear" class="form-control" formControlName="startYear" placeholder="e.g., 2009" />
+              @if (educationForm.get('startYear')?.hasError('required') && educationForm.get('startYear')?.touched) {
+                <small class="form-text text-danger">Start Year is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="eduEndYear">End Year</label>
+              <input type="text" id="eduEndYear" class="form-control" formControlName="endYear" placeholder="e.g., 2012" />
+              @if (educationForm.get('endYear')?.hasError('required') && educationForm.get('endYear')?.touched) {
+                <small class="form-text text-danger">End Year is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="eduTitle">Title</label>
+              <input type="text" id="eduTitle" class="form-control" formControlName="title" placeholder="Enter degree title" />
+              @if (educationForm.get('title')?.hasError('required') && educationForm.get('title')?.touched) {
+                <small class="form-text text-danger">Title is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="eduName">Institution</label>
+              <input type="text" id="eduName" class="form-control" formControlName="name" placeholder="Enter institution name" />
+              @if (educationForm.get('name')?.hasError('required') && educationForm.get('name')?.touched) {
+                <small class="form-text text-danger">Institution is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="percentage">Percentage/CGPA</label>
+              <input type="text" id="edu-percentage" class="form-control" formControlName="percentage" placeholder="e.g., 9.02 CGPA" />
+              @if (educationForm.get('percentage')?.hasError('required') && educationForm.get('percentage')?.touched) {
+                <small class="form-text text-danger">Percentage/CGPA is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="class">Class</label>
+              <input type="text" id="ed-class" class="form-control" formControlName="class" placeholder="e.g., Distinction" />
+              @if (educationForm.get('class')?.hasError('required') && educationForm.get('class')?.touched) {
+                <small class="form-text text-danger">Class is required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="educationForm.invalid">
+                {{ editingEducation()?.id ? 'Update Education' : 'Add Education' }}
+              </button>
+              @if (editingEducation()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditEducation()">Cancel</button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Education</h5>
+            @if (eduEvents().length > 0) {
+              <ul>
+                @for (edu of eduEvents(); track edu.id) {
+                  <li>
+                    {{ edu.title }} at {{ edu.name }} ({{ edu.startYear }} - {{ edu.endYear }})
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editEducation(edu)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteEducation(edu.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No education records added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Skills Management -->
+        <div class="mt-4">
+          <h4>Skills</h4>
+          <form [formGroup]="skillForm" (ngSubmit)="saveSkill()">
+            <div class="form-group">
+              <label for="skillTitle">Title</label>
+              <input type="text" id="skillTitle" class="form-control" formControlName="title" placeholder="Enter skill title" />
+              @if (skillForm.get('title')?.hasError('required') && skillForm.get('title')?.touched) {
+                <small class="form-text text-danger">Title is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="percentage">Percentage</label>
+              <input type="number" id="percentage" class="form-control" formControlName="percentage" placeholder="Enter percentage (0-100)" min="0" max="100" />
+              @if (skillForm.get('percentage')?.hasError('required') && skillForm.get('percentage')?.touched) {
+                <small class="form-text text-danger">Percentage is required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="skillForm.invalid">
+                {{ editingSkill()?.id ? 'Update Skill' : 'Add Skill' }}
+              </button>
+              @if (editingSkill()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditSkill()">Cancel</button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Skills</h5>
+            @if (skills().length > 0) {
+              <ul>
+                @for (skill of skills(); track skill.id) {
+                  <li>
+                    {{ skill.title }} ({{ skill.percentage }}%)
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editSkill(skill)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteSkill(skill.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No skills added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Testimonials Management -->
+        <div class="mt-4">
+          <h4>Testimonials</h4>
+          <form [formGroup]="testimonialForm" (ngSubmit)="saveTestimonial()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter name" />
+              @if (testimonialForm.get('name')?.hasError('required') && testimonialForm.get('name')?.touched) {
+                <small class="form-text text-danger">Name is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="position">Position</label>
+              <input type="text" id="position" class="form-control" formControlName="position" placeholder="Enter position" />
+              @if (testimonialForm.get('position')?.hasError('required') && testimonialForm.get('position')?.touched) {
+                <small class="form-text text-danger">Position is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="file" id="image" class="form-control" (change)="onTestimonialImageSelected($event)" accept="image/*" />
+              <small class="form-text text-muted">Accepted formats: JPG, PNG (max 5MB)</small>
+              @if (editingTestimonial()?.image) {
+                <p class="mt-2">
+                  Current: <a [href]="'https://varanjith.com/api/uploads/' + editingTestimonial()?.image" target="_blank">View Image</a>
+                </p>
+              }
+            </div>
+            <div class="form-group">
+              <label for="comments">Comments</label>
+              <textarea id="comments" class="form-control" formControlName="comments" placeholder="Enter comments"></textarea>
+              @if (testimonialForm.get('comments')?.hasError('required') && testimonialForm.get('comments')?.touched) {
+                <small class="form-text text-danger">Comments are required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="testimonialForm.invalid && !testimonialImageFile()">
+                {{ editingTestimonial()?.id ? 'Update Testimonial' : 'Add Testimonial' }}
+              </button>
+              @if (editingTestimonial()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditTestimonial()">Cancel</button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Testimonials</h5>
+            @if (testimonials().length > 0) {
+              <ul>
+                @for (testimonial of testimonials(); track testimonial.id) {
+                  <li>
+                    {{ testimonial.name }} - {{ testimonial.position }}
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editTestimonial(testimonial)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteTestimonial(testimonial.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No testimonials added yet.</p>
+            }
+          </div>
+        </div>
+      </div>
+    } @else if (activeTab() === 'contact') {
+      <div class="tab-pane active">
+        <h3>Contact Content Management</h3>
+
+        <!-- Social Links Management -->
+        <div class="mt-4">
+          <h4>Social Links</h4>
+          <form [formGroup]="socialLinkForm" (ngSubmit)="saveSocialLink()">
+            <div class="form-group">
+              <label for="platform">Platform</label>
+              <input
+                type="text"
+                id="platform"
+                class="form-control"
+                formControlName="platform"
+                placeholder="Enter platform name"
+              />
+              @if (socialLinkForm.get('platform')?.hasError('required') && socialLinkForm.get('platform')?.touched) {
+                <small class="form-text text-danger">Platform is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="url">URL</label>
+              <input
+                type="text"
+                id="url"
+                class="form-control"
+                formControlName="url"
+                placeholder="Enter URL"
+              />
+              @if (socialLinkForm.get('url')?.hasError('required') && socialLinkForm.get('url')?.touched) {
+                <small class="form-text text-danger">URL is required</small>
+              }
+              @if (socialLinkForm.get('url')?.hasError('pattern') && socialLinkForm.get('url')?.touched) {
+                <small class="form-text text-danger">Enter a valid URL (http:// or https://)</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="class">CSS Class</label>
+              <input
+                type="text"
+                id="class"
+                class="form-control"
+                formControlName="class"
+                placeholder="Enter CSS class"
+              />
+              @if (socialLinkForm.get('class')?.hasError('required') && socialLinkForm.get('class')?.touched) {
+                <small class="form-text text-danger">CSS Class is required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="socialLinkForm.invalid">
+                {{ editingSocialLink()?.id ? 'Update Social Link' : 'Add Social Link' }}
+              </button>
+              @if (editingSocialLink()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditSocialLink()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Social Links</h5>
+            @if (socialLinks().length > 0) {
+              <ul>
+                @for (link of socialLinks(); track link.id) {
+                  <li>
+                    {{ link.platform }} ({{ link.url }})
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editSocialLink(link)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteSocialLink(link.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No social links added yet.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Contact Info Management -->
+        <div class="mt-4">
+          <h4>Contact Information</h4>
+          <form [formGroup]="contactInfoForm" (ngSubmit)="saveContactInfo()">
+            <div class="form-group">
+              <label for="icon">Icon Filename</label>
+              <input
+                type="text"
+                id="icon"
+                class="form-control"
+                formControlName="icon"
+                placeholder="Enter icon filename (e.g., icon-location.svg)"
+              />
+              <small class="form-text text-muted">Ensure the icon file is in assets/images/site/</small>
+              @if (contactInfoForm.get('icon')?.hasError('required') && contactInfoForm.get('icon')?.touched) {
+                <small class="form-text text-danger">Icon is required</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="text">Text</label>
+              <input
+                type="text"
+                id="text"
+                class="form-control"
+                formControlName="text"
+                placeholder="Enter contact text"
+              />
+              @if (contactInfoForm.get('text')?.hasError('required') && contactInfoForm.get('text')?.touched) {
+                <small class="form-text text-danger">Text is required</small>
+              }
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="contactInfoForm.invalid">
+                {{ editingContactInfo()?.id ? 'Update Contact Info' : 'Add Contact Info' }}
+              </button>
+              @if (editingContactInfo()?.id) {
+                <button type="button" class="btn btn-secondary ml-2" (click)="cancelEditContactInfo()">
+                  Cancel
+                </button>
+              }
+            </div>
+          </form>
+          <div class="mt-3">
+            <h5>Existing Contact Information</h5>
+            @if (contactInfo().length > 0) {
+              <ul>
+                @for (info of contactInfo(); track info.id) {
+                  <li>
+                    {{ info.text }} (Icon: {{ info.icon }})
+                    <button class="btn btn-primary btn-sm ml-2" (click)="editContactInfo(info)">Edit</button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteContactInfo(info.id!)">Delete</button>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p>No contact information added yet.</p>
+            }
+          </div>
+        </div>
+      </div>
+    } @else if (activeTab() === 'portfolio') {
+      <div class="tab-pane active">
+        <h3>Portfolio</h3>
+        <p>Manage Portfolio content (to be implemented).</p>
+      </div>
+    } @else if (activeTab() === 'blog') {
+      <div class="tab-pane active">
+        <h3>Blog</h3>
+        <p>Manage Blog content (to be implemented).</p>
+      </div>
+    }
+  </div>
+</div>
+  }
