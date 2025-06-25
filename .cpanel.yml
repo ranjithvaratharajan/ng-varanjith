@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/varanjit/public_html/
-    - /bin/cp -R dist/ng-varanjith/browser/* $DEPLOYPATH
+    - /bin/cp -R dist/ng/ng-varanjith/* $DEPLOYPATH
