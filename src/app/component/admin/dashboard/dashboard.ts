@@ -164,7 +164,7 @@ export class AdminDashboardComponent {
     { id: 'blog', label: 'Blog' },
   ];
 
-  private baseUrl = 'https://varanjith.com/api';
+  private baseUrl = 'https://api.varanjith.com';
 
   constructor() {
     if (!this.authService.isAuthenticated()) {

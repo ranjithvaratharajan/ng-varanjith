@@ -12,18 +12,18 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'https://varanjith.com/api';
+  private baseUrl = 'https://api.varanjith.com';
   private tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('jwt_token'));
   // private token$ = this.tokenSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<LoginResponse> {
     // Hash password client-side using SHA-256
     const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
     return this.http
       .post<LoginResponse>(
-        `${this.baseUrl}/login.php`,
+        `${this.baseUrl}/login`,
         { username, password: hashedPassword },
         { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }
       )

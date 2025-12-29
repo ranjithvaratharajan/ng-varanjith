@@ -1,55 +1,55 @@
-  @defer (when !loading.isLoading()) {
-    <article class="page hentry">
-      <header class="entry-header">
-        <h1 class="entry-title">About Me</h1>
-      </header>
-      <div class="entry-content">
-        <div class="about-me-desc">
-          @for (paragraph of JSON.parse(description().content); track $index) {
-            <p>{{ paragraph }}</p>
-          }
-        </div>
-        <div class="section-title center">
-          <h2><i>Services</i></h2>
-        </div>
-        <div class="row pb-1">
-          @for (service of services(); track service.id) {
-            <div class="col-sm-12 col-md-6 col-lg-6">
-              <div class="service">
-                <img src="https://varanjith.com/api/uploads/{{ service.icon }}" alt="image" />
-                <h4>{{ service.title }}</h4>
-                <p class="service-desc">{{ service.description }}</p>
-              </div>
-            </div>
-          }
-        </div>
-        <div class="section-title center">
-          <h2><i>Work Process</i></h2>
-        </div>
-        <div class="row">
-          @for (process of workProcess(); track process.id) {
-            <div class="col-xs-4 col-sm-2">
-              <div class="process">
-                <img src="https://varanjith.com/api/uploads/{{ process.icon }}" alt="image" />
-                <h4>{{ process.title }}</h4>
-              </div>
-            </div>
-          }
-        </div>
-        <div class="section-title center">
-          <h2><i>Proud to Work With</i></h2>
-        </div>
-        <div class="row">
-          @for (client of clients(); track client.id; let i = $index) {
-            <div class="col-xs-6 col-sm-4">
-              <div class="client">
-                <span>
-                  <img src="https://varanjith.com/api/uploads/{{ client.image }}" alt="client" />
-                </span>
-              </div>
-            </div>
-          }
+@defer (when !loading.isLoading()) {
+<article class="page hentry">
+  <header class="entry-header">
+    <h1 class="entry-title">About Me</h1>
+  </header>
+  <div class="entry-content">
+    <div class="about-me-desc">
+      @for (paragraph of JSON.parse(description().content); track $index) {
+      <p>{{ paragraph }}</p>
+      }
+    </div>
+    <div class="section-title center">
+      <h2><i>Services</i></h2>
+    </div>
+    <div class="row pb-1">
+      @for (service of services(); track service.id) {
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="service">
+          <img src="https://api.varanjith.com/uploads/{{ service.icon }}" alt="image" />
+          <h4>{{ service.title }}</h4>
+          <p class="service-desc">{{ service.description }}</p>
         </div>
       </div>
-    </article>
-  }
+      }
+    </div>
+    <div class="section-title center">
+      <h2><i>Work Process</i></h2>
+    </div>
+    <div class="row">
+      @for (process of workProcess(); track process.id) {
+      <div class="col-xs-4 col-sm-2">
+        <div class="process">
+          <img src="https://api.varanjith.com/uploads/{{ process.icon }}" alt="image" />
+          <h4>{{ process.title }}</h4>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="section-title center">
+      <h2><i>Proud to Work With</i></h2>
+    </div>
+    <div class="row">
+      @for (client of clients(); track client.id; let i = $index) {
+      <div class="col-xs-6 col-sm-4">
+        <div class="client">
+          <span>
+            <img src="https://api.varanjith.com/uploads/{{ client.image }}" alt="client" />
+          </span>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</article>
+}

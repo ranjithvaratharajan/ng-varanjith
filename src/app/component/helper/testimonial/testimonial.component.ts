@@ -10,6 +10,6 @@ import { TestimonialModel } from 'src/app/model/testimonial.model';
   imports: [CommonModule],
 })
 export class TestimonialComponent {
-  baseUrl: string = 'https://varanjith.com/api/uploads/';
+  baseUrl: string = 'https://api.varanjith.com/uploads/';
   @Input({ required: true }) testimonial!: TestimonialModel; // Required
 }

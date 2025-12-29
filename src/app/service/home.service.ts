@@ -23,7 +23,7 @@ interface NavLink {
 export class HomeService {
   private http = inject(HttpClient);
   private toastr = inject(ToastrService);
-  private baseUrl = 'https://varanjith.com/api';
+  private baseUrl = 'https://api.varanjith.com';
 
   // Signals
   isCardOpen = signal<boolean>(false);
@@ -55,7 +55,7 @@ export class HomeService {
   }
 
   private loadProfile() {
-    this.http.get<Profile>(`${this.baseUrl}/profile.php`).subscribe({
+    this.http.get<Profile>(`${this.baseUrl}/profile`).subscribe({
       next: (data) => {
         this.profile.set(data);
         this.error.set(null);

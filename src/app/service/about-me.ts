@@ -30,72 +30,72 @@ export interface Client {
 })
 export class AboutMeService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://varanjith.com/api/about-me.php';
+  private baseUrl = 'https://api.varanjith.com/about-me';
 
   // Description
   getDescription(): Observable<AboutMeDescription> {
-    return this.http.get<AboutMeDescription>(`${this.baseUrl}?section=description`);
+    return this.http.get<AboutMeDescription>(`${this.baseUrl}/description`);
   }
 
   saveDescription(description: AboutMeDescription): Observable<any> {
     return description.id
-      ? this.http.put(`${this.baseUrl}?section=description`, description)
-      : this.http.post(`${this.baseUrl}?section=description`, description);
+      ? this.http.put(`${this.baseUrl}/description`, description)
+      : this.http.post(`${this.baseUrl}/description`, description);
   }
 
   deleteDescription(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=description`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/description`, { body: { id } });
   }
 
   // Services
   getServices(): Observable<Service[]> {
-    return this.http.get<Service[]>(`${this.baseUrl}?section=services`);
+    return this.http.get<Service[]>(`${this.baseUrl}/services`);
   }
 
   saveService(service: Service): Observable<any> {
     return service.id
-      ? this.http.put(`${this.baseUrl}?section=services`, service)
-      : this.http.post(`${this.baseUrl}?section=services`, service);
+      ? this.http.put(`${this.baseUrl}/services`, service)
+      : this.http.post(`${this.baseUrl}/services`, service);
   }
 
   deleteService(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=services`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/services`, { body: { id } });
   }
 
   // Work Process
   getWorkProcess(): Observable<WorkProcess[]> {
-    return this.http.get<WorkProcess[]>(`${this.baseUrl}?section=work-process`);
+    return this.http.get<WorkProcess[]>(`${this.baseUrl}/work-process`);
   }
 
   saveWorkProcess(process: WorkProcess): Observable<any> {
     return process.id
-      ? this.http.put(`${this.baseUrl}?section=work-process`, process)
-      : this.http.post(`${this.baseUrl}?section=work-process`, process);
+      ? this.http.put(`${this.baseUrl}/work-process`, process)
+      : this.http.post(`${this.baseUrl}/work-process`, process);
   }
 
   deleteWorkProcess(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=work-process`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/work-process`, { body: { id } });
   }
 
   // Clients
   getClients(): Observable<Client[]> {
-    return this.http.get<Client[]>(`${this.baseUrl}?section=clients`);
+    return this.http.get<Client[]>(`${this.baseUrl}/clients`);
   }
 
   saveClient(client: Client): Observable<any> {
     return client.id
-      ? this.http.put(`${this.baseUrl}?section=clients`, client)
-      : this.http.post(`${this.baseUrl}?section=clients`, client);
+      ? this.http.put(`${this.baseUrl}/clients`, client)
+      : this.http.post(`${this.baseUrl}/clients`, client);
   }
 
   deleteClient(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=clients`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/clients`, { body: { id } });
   }
 
   // File Upload
   uploadFile(file: File): Observable<{ url: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ url: string }>('https://varanjith.com/api/upload.php', formData);
+    return this.http.post<{ url: string }>('https://api.varanjith.com/upload.php', formData);
   }
 }

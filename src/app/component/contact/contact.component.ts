@@ -24,7 +24,7 @@ interface ContactInfo {
 })
 export class ContactComponent {
   private http = inject(HttpClient);
-  private baseUrl = 'https://varanjith.com/api';
+  private baseUrl = 'https://api.varanjith.com';
 
   // Signals for data
   socialLinks = signal<SocialLink[]>([]);
@@ -37,14 +37,14 @@ export class ContactComponent {
   }
 
   private loadData(): void {
-    this.http.get<SocialLink[]>(`${this.baseUrl}/contact.php?resource=social_links`).subscribe({
+    this.http.get<SocialLink[]>(`${this.baseUrl}/contact/sociallinks`).subscribe({
       next: (data) => this.socialLinks.set(data),
       error: (err) => {
         this.error.set('Failed to load social links');
         console.error(err);
       },
       complete: () => {
-        this.http.get<ContactInfo[]>(`${this.baseUrl}/contact.php?resource=contact_info`).subscribe({
+        this.http.get<ContactInfo[]>(`${this.baseUrl}/contact/contactinfo`).subscribe({
           next: (data) => this.contactInfo.set(data),
           error: (err) => {
             this.error.set('Failed to load contact info');

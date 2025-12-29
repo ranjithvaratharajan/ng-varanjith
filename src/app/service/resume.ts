@@ -40,71 +40,71 @@ export interface Testimonial {
 })
 export class ResumeService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://varanjith.com/api/resume.php';
+  private baseUrl = 'https://api.varanjith.com/resume';
 
   getWorkHistory(): Observable<WorkHistory[]> {
-    return this.http.get<WorkHistory[]>(`${this.baseUrl}?section=work-history`);
+    return this.http.get<WorkHistory[]>(`${this.baseUrl}/work-history`);
   }
 
   getEducation(): Observable<Education[]> {
-    return this.http.get<Education[]>(`${this.baseUrl}?section=education`);
+    return this.http.get<Education[]>(`${this.baseUrl}/education`);
   }
 
   getSkills(): Observable<Skill[]> {
-    return this.http.get<Skill[]>(`${this.baseUrl}?section=skills`);
+    return this.http.get<Skill[]>(`${this.baseUrl}/skills`);
   }
 
   getTestimonials(): Observable<Testimonial[]> {
-    return this.http.get<Testimonial[]>(`${this.baseUrl}?section=testimonials`);
+    return this.http.get<Testimonial[]>(`${this.baseUrl}/testimonials`);
   }
 
   saveWorkHistory(item: WorkHistory): Observable<any> {
     return item.id
-      ? this.http.put(`${this.baseUrl}?section=work-history`, item)
-      : this.http.post(`${this.baseUrl}?section=work-history`, item);
+      ? this.http.put(`${this.baseUrl}/work-history`, item)
+      : this.http.post(`${this.baseUrl}/work-history`, item);
   }
 
   deleteWorkHistory(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=work-history`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/work-history`, { body: { id } });
   }
 
   saveEducation(item: Education): Observable<any> {
     return item.id
-      ? this.http.put(`${this.baseUrl}?section=education`, item)
-      : this.http.post(`${this.baseUrl}?section=education`, item);
+      ? this.http.put(`${this.baseUrl}/education`, item)
+      : this.http.post(`${this.baseUrl}/education`, item);
   }
 
   deleteEducation(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=education`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/education`, { body: { id } });
   }
 
   saveSkill(item: Skill): Observable<any> {
     return item.id
-      ? this.http.put(`${this.baseUrl}?section=skills`, item)
-      : this.http.post(`${this.baseUrl}?section=skills`, item);
+      ? this.http.put(`${this.baseUrl}/skills`, item)
+      : this.http.post(`${this.baseUrl}/skills`, item);
   }
 
   deleteSkill(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=skills`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/skills`, { body: { id } });
   }
 
   saveTestimonial(item: Testimonial): Observable<any> {
     return item.id
-      ? this.http.put(`${this.baseUrl}?section=testimonials`, item)
-      : this.http.post(`${this.baseUrl}?section=testimonials`, item);
+      ? this.http.put(`${this.baseUrl}/testimonials`, item)
+      : this.http.post(`${this.baseUrl}/testimonials`, item);
   }
 
   deleteTestimonial(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?section=testimonials`, { body: { id } });
+    return this.http.delete(`${this.baseUrl}/testimonials`, { body: { id } });
   }
 
   uploadFile(file: File): Observable<{ url: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ url: string }>('https://varanjith.com/api/upload.php', formData);
+    return this.http.post<{ url: string }>('https://api.varanjith.com/upload.php', formData);
   }
 
   downloadCv(): Observable<Blob> {
-    return this.http.get('https://varanjith.com/api/uploads/cv.pdf', { responseType: 'blob' });
+    return this.http.get('https://api.varanjith.com/uploads/cv.pdf', { responseType: 'blob' });
   }
 }
